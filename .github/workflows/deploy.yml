@@ -1,0 +1,54 @@
+name: Deploy to Server
+on:
+  push:
+    branches: [ master ]
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Set up JDK 17
+      uses: actions/setup-java@v3
+      with:
+        java-version: '17'
+        distribution: 'temurin'
+        
+    - name: Build with Maven
+      run: mvn clean install -DskipTests
+      
+    - name: Deploy to server
+      uses: appleboy/ssh-action@v0.1.5
+      with:
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.USERNAME }}
+        key: ${{ secrets.SSH_KEY }}
+        script: |
+          # Stop the application
+          pm2 stop smartlife-iot
+          
+          # Backup current jar (optional)
+          cp /opt/thingsboard/thingsboard-*-boot.jar /opt/thingsboard/backup/thingsboard-*-boot.jar.backup
+          
+          # Remove old jar
+          rm /opt/thingsboard/thingsboard-*-boot.jar
+          
+    - name: Copy jar to server
+      uses: appleboy/scp-action@v0.1.4
+      with:
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.USERNAME }}
+        key: ${{ secrets.SSH_KEY }}
+        source: "application/target/thingsboard-*-boot.jar"
+        target: "/opt/thingsboard/thingsboard-*-boot.jar"
+        
+    - name: Restart application
+      uses: appleboy/ssh-action@v0.1.5
+      with:
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.USERNAME }}
+        key: ${{ secrets.SSH_KEY }}
+        script: |
+          pm2 start smartlife-iot
+          pm2 save
