@@ -1,0 +1,114 @@
+/**
+ * Copyright © 2016-2025 The Thingsboard Authors
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+@use '@angular/material' as mat;
+
+$mat-datetimepicker-selected-today-box-shadow-width: 1px;
+
+@mixin mat-datetimepicker-theme($theme) {
+
+  $primary: map-get($theme, primary);
+
+  $primary-color: mat.m2-get-color-from-palette($primary);
+  $primary-contrast: mat.m2-get-color-from-palette($primary, default-contrast);
+
+  .mat-datetimepicker-calendar-header {
+    background: linear-gradient(135deg, #483C8E 0%, #5a4fcf 100%);
+    color: $primary-contrast;
+    border-radius: 8px 8px 0 0;
+  }
+
+  .mat-datetimepicker-calendar-body-cell-content {
+    &.mat-datetimepicker-calendar-body-selected {
+      background: linear-gradient(135deg, #483C8E 0%, #5a4fcf 100%);
+      color: $primary-contrast;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(72, 60, 142, 0.3);
+    }
+
+    &.mat-datetimepicker-calendar-body-disabled > .mat-datetimepicker-calendar-body-selected {
+      background-color: rgba($primary-color, 0.4);
+    }
+
+    &.mat-datetimepicker-calendar-body-today {
+      &:not(.mat-datetimepicker-calendar-body-selected) {
+        border-color: #483C8E;
+        border-width: 2px;
+        border-radius: 8px;
+        box-shadow: 0 0 0 1px rgba(72, 60, 142, 0.2);
+      }
+
+      &.mat-datetimepicker-calendar-body-selected {
+        box-shadow: inset 0 0 0 $mat-datetimepicker-selected-today-box-shadow-width $primary-contrast,
+                    0 2px 8px rgba(72, 60, 142, 0.4);
+      }
+    }
+    
+    // Hover effects
+    &:hover:not(.mat-datetimepicker-calendar-body-selected):not(.mat-datetimepicker-calendar-body-disabled) {
+      background-color: rgba(72, 60, 142, 0.08);
+      border-radius: 6px;
+    }
+  }
+
+  .mat-datetimepicker-clock-center {
+    background: linear-gradient(135deg, #483C8E 0%, #5a4fcf 100%);
+    box-shadow: 0 2px 4px rgba(72, 60, 142, 0.3);
+  }
+
+  .mat-datetimepicker-clock-hand {
+    background: linear-gradient(135deg, #483C8E 0%, #5a4fcf 100%);
+
+    &::before {
+      background: linear-gradient(135deg, #483C8E 0%, #5a4fcf 100%);
+      box-shadow: 0 2px 4px rgba(72, 60, 142, 0.3);
+    }
+  }
+
+  .mat-datetimepicker-clock-cell {
+    &.mat-datetimepicker-clock-cell-selected {
+      background: linear-gradient(135deg, #5a4fcf 0%, #a78bfa 100%);
+      color: white;
+      border-radius: 50%;
+      box-shadow: 0 2px 4px rgba(72, 60, 142, 0.3);
+    }
+    
+    &:hover:not(.mat-datetimepicker-clock-cell-selected):not(.mat-datetimepicker-clock-cell-disabled) {
+      background-color: rgba(72, 60, 142, 0.08);
+      border-radius: 50%;
+    }
+  }
+  
+  // Calendar navigation buttons
+  .mat-datetimepicker-calendar-header-date-time {
+    .mat-mdc-icon-button {
+      &:hover {
+        background-color: rgba(255, 255, 255, 0.1);
+        border-radius: 50%;
+      }
+    }
+  }
+  
+  // Month/year picker
+  .mat-datetimepicker-calendar-body-cell {
+    &.mat-datetimepicker-calendar-body-active {
+      .mat-datetimepicker-calendar-body-cell-content {
+        background: linear-gradient(135deg, #7c3aed 0%, #9333ea 100%);
+        color: white;
+        border-radius: 8px;
+      }
+    }
+  }
+}

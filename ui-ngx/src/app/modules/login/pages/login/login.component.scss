@@ -1,0 +1,396 @@
+/**
+ * Copyright © 2016-2025 The Thingsboard Authors
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+@import '../../../../../scss/constants';
+@import '../../../../../theme';
+
+:host {
+  display: flex;
+  flex: 1 1 0;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #9B4A7A 0%, #483C8E 50%,  #7A3461 100%);
+  position: relative;
+  
+  // Add subtle background pattern
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: 
+      radial-gradient(circle at 25% 25%, rgba(255, 255, 255, 0.08) 0%, transparent 50%),
+      radial-gradient(circle at 75% 75%, rgba(255, 255, 255, 0.04) 0%, transparent 50%);
+    pointer-events: none;
+  }
+
+  .tb-login-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin: 0;
+    padding: 40px;
+    background-color: transparent;
+    
+    @media #{$mat-xs} {
+      justify-content: center;
+      padding: 20px;
+    }
+    
+    // Style the mat-card container
+    .mat-card,
+    .mat-mdc-card {
+      background: #483C8E;
+      backdrop-filter: blur(20px);
+      border-radius: 24px !important;
+      box-shadow: 
+        0 20px 60px rgba(0, 0, 0, 0.15),
+        0 8px 24px rgba(155, 74, 122, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.8);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      overflow: visible !important;
+      position: relative;
+      max-height: none !important;
+      height: auto !important;
+      
+      // Add subtle shine effect to card
+      &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 2px;
+        background: linear-gradient(90deg, transparent, rgba(195, 107, 168, 0.3), transparent);
+      }
+      
+      &:hover {
+        transform: translateY(-2px);
+        box-shadow: 
+          0 32px 80px rgba(0, 0, 0, 0.2),
+          0 12px 32px rgba(155, 74, 122, 0.3),
+          inset 0 1px 0 rgba(255, 255, 255, 0.9);
+      }
+
+      @media #{$mat-gt-xs} {
+        width: 480px !important;
+        max-width: 90vw;
+      }
+      
+      @media #{$mat-xs} {
+        width: 100% !important;
+        max-width: 400px;
+        border-radius: 20px !important;
+      }
+    }
+    
+    // Style mat-card-content
+    .mat-card-content,
+    .mat-mdc-card-content {
+      padding: 32px 40px !important;
+      overflow: visible !important;
+      max-height: none !important;
+      
+      @media #{$mat-xs} {
+        padding: 24px 20px !important;
+      }
+    }
+    
+    .tb-login-form {
+      width: 100%;
+      
+      fieldset {
+        border: none;
+        padding: 0;
+        margin: 0;
+      }
+      
+      // Logo container styling
+      .login-logo {
+        max-width: 200px;
+        width: 100%;
+        height: auto;
+        object-fit: contain;
+        
+        // Ensure logo maintains aspect ratio and isn't compressed
+        ::ng-deep {
+          img, svg {
+            width: 100%;
+            height: auto;
+            max-height: 80px;
+            object-fit: contain;
+          }
+        }
+      }
+      
+      // Progress bar styling
+      .mat-progress-bar {
+        border-radius: 4px;
+        overflow: hidden;
+        
+        .mat-progress-bar-buffer {
+          background-color: rgba(195, 107, 168, 0.2);
+        }
+        
+        .mat-progress-bar-fill::after {
+          background-color: #C36BA8;
+        }
+      }
+
+      // Style form elements
+      .mat-form-field,
+      .mat-mdc-form-field {
+        width: 100%;
+        margin-bottom: 8px;
+        
+        &.tb-appearance-transparent {
+          .mat-form-field-wrapper {
+            padding-bottom: 0;
+            background-color: rgba(255, 255, 255, 0.7);
+            border-radius: 12px;
+            padding: 4px 16px;
+            transition: all 0.3s ease;
+            
+            &:hover {
+              background-color: rgba(255, 255, 255, 0.9);
+            }
+          }
+          
+          .mat-form-field-underline {
+            background-color: rgba(195, 107, 168, 0.3);
+          }
+          
+          &.mat-focused {
+            .mat-form-field-wrapper {
+              background-color: rgba(255, 255, 255, 1);
+              box-shadow: 0 0 0 2px rgba(195, 107, 168, 0.3);
+            }
+            
+            .mat-form-field-underline {
+              background-color: #C36BA8;
+            }
+          }
+        }
+        
+        // Icon styling
+        .mat-icon {
+          color: #fff;
+          
+          &.mat-form-field-prefix-icon {
+            margin-right: 12px;
+          }
+        }
+        
+        // Label styling
+        .mat-form-field-label {
+          color: #fff !important;
+          font-weight: 500;
+        }
+        
+        // Input styling
+        input {
+          color: #fff;
+          
+          &::placeholder {
+            color: #fff;
+          }
+        }
+      }
+
+      .forgot-password {
+        padding: 16px 0 24px;
+        
+        .tb-reset-password {
+          padding: 8px 16px;
+          color: #C36BA8;
+          text-decoration: none;
+          border-radius: 12px;
+          transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+          font-weight: 500;
+          border: 1px solid transparent;
+          
+          &:hover {
+            background-color: rgba(195, 107, 168, 0.1);
+            border-color: rgba(195, 107, 168, 0.2);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(195, 107, 168, 0.2);
+          }
+        }
+      }
+
+      .tb-action-button {
+        padding: 24px 0 20px;
+        
+        .mat-raised-button,
+        .mat-mdc-raised-button {
+          background: linear-gradient(135deg, #C36BA8 0%, #9B4A7A 50%, #7A3461 100%) !important;
+          color: white !important;
+          border-radius: 16px !important;
+          padding: 16px 40px !important;
+          font-weight: 600 !important;
+          letter-spacing: 0.8px !important;
+          font-size: 15px !important;
+          text-transform: uppercase !important;
+          width: 100%;
+          box-shadow: 
+            0 8px 24px rgba(195, 107, 168, 0.35),
+            0 4px 12px rgba(155, 74, 122, 0.25),
+            inset 0 1px 0 rgba(255, 255, 255, 0.2) !important;
+          transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+          position: relative;
+          overflow: hidden;
+          border: none !important;
+          min-height: 48px;
+          
+          // Add subtle shine effect
+          &::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.6s;
+          }
+          
+          &:hover {
+            transform: translateY(-3px) !important;
+            box-shadow: 
+              0 12px 32px rgba(195, 107, 168, 0.45),
+              0 6px 16px rgba(155, 74, 122, 0.35),
+              inset 0 1px 0 rgba(255, 255, 255, 0.3) !important;
+            
+            &::before {
+              left: 100%;
+            }
+          }
+          
+          &:active {
+            transform: translateY(-1px) !important;
+            transition: all 0.1s ease !important;
+          }
+          
+          &:focus {
+            outline: none;
+            box-shadow: 
+              0 8px 24px rgba(195, 107, 168, 0.35),
+              0 4px 12px rgba(155, 74, 122, 0.25),
+              0 0 0 3px rgba(195, 107, 168, 0.3) !important;
+          }
+          
+          &:disabled {
+            opacity: 0.6;
+            transform: none !important;
+            cursor: not-allowed;
+          }
+        }
+      }
+    }
+
+    .oauth-container {
+      padding: 24px 0 0;
+      margin-top: 24px;
+
+      .container-divider {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        margin: 20px 0;
+
+        .line {
+          flex: 1;
+        }
+
+        .mat-divider-horizontal {
+          position: relative;
+          border-color: rgba(195, 107, 168, 0.3);
+        }
+
+        .text {
+          padding: 0 16px;
+          color: #fff;
+          font-size: 14px;
+          font-weight: 500;
+        }
+      }
+
+      .material-icons {
+        width: 20px;
+        min-width: 20px;
+        margin-right: 8px;
+      }
+
+      a.login-with-button {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        padding: 14px 24px;
+        margin: 10px 0;
+        color: rgba(0, 0, 0, 0.87);
+        background-color: rgba(255, 255, 255, 0.9);
+        border: 1px solid rgba(195, 107, 168, 0.2);
+        border-radius: 12px;
+        text-decoration: none;
+        font-weight: 500;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        backdrop-filter: blur(10px);
+        min-height: 48px;
+
+        &:hover {
+          border-color: rgba(195, 107, 168, 0.4);
+          background-color: rgba(255, 255, 255, 1);
+          transform: translateY(-2px);
+          box-shadow: 
+            0 6px 16px rgba(0, 0, 0, 0.1),
+            0 2px 8px rgba(195, 107, 168, 0.15);
+        }
+
+        &:active {
+          transform: translateY(0);
+          transition: all 0.1s ease;
+        }
+
+        .icon {
+          height: 20px;
+          width: 20px;
+          margin-right: 12px;
+        }
+      }
+    }
+  }
+  
+  // Add a decorative element on the left side
+  &::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 50%;
+    background: linear-gradient(45deg, rgba(255, 255, 255, 0.1) 0%, transparent 100%);
+    clip-path: polygon(0 0, 70% 0, 30% 100%, 0% 100%);
+    
+    @media #{$mat-xs} {
+      display: none;
+    }
+  }
+}

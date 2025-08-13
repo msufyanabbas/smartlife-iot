@@ -1,0 +1,272 @@
+/**
+ * Copyright © 2016-2025 The Thingsboard Authors
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+@use '@angular/material' as mat;
+@use 'theme-overwrites' as overwrites;
+@import '../theme/datepicker-theme';
+@import './scss/constants';
+@import url('https://fonts.googleapis.com/css2?family=Mulish:ital,wght@0,200..1000;1,200..1000&display=swap');
+
+@include mat.all-component-typographies();
+@include mat.core();
+
+$tb-mat-indigo: (
+  50: #f4f3ff,
+  100: #ede9fe,
+  200: #ddd6fe,
+  300: #c4b5fd,
+  400: #a78bfa,
+  500: $tb-primary-color,
+  600: $tb-secondary-color,
+  700: #483C8E,
+  800: #3d3576,
+  900: #312e81,
+  A100: $tb-hue3-color,
+  A200: #d946ef,
+  A400: #c026d3,
+  A700: #a21caf,
+  contrast: (
+    50: rgba(black, 0.87),
+    100: rgba(black, 0.87),
+    200: rgba(black, 0.87),
+    300: rgba(black, 0.87),
+    400: rgba(black, 0.87),
+    500: white,
+    600: white,
+    700: white,
+    800: white,
+    900: white,
+    A100: rgba(black, 0.87),
+    A200: white,
+    A400: white,
+    A700: white,
+  )
+);
+
+$tb-primary: mat.m2-define-palette($tb-mat-indigo);
+$tb-accent: mat.m2-define-palette(mat.$m2-pink-palette);
+
+$background: (background: #ffffff);
+
+$tb-theme-background: map_merge(mat.$m2-light-theme-background-palette, $background);
+
+$tb-mat-theme: mat.m2-define-light-theme((
+  color: (
+    primary: $tb-primary,
+    accent: $tb-accent
+  ),
+  typography: mat.m2-define-typography-config(
+    $font-family: 'Mulish, "Helvetica Neue", sans-serif',
+    $button: mat.m2-define-typography-level(14px, 36px, 500, 'Mulish, "Helvetica Neue", sans-serif', 0.03125em)
+  ),
+  density: 0
+));
+
+$color: map_get($tb-mat-theme, color);
+$color: map_merge($color, (background: $tb-theme-background));
+$tb-mat-theme: map_merge($tb-mat-theme, (color: $color));
+$tb-theme: map_merge($tb-mat-theme, $color);
+
+$primary: mat.m2-get-color-from-palette($tb-primary);
+$accent: mat.m2-get-color-from-palette($tb-accent);
+
+$tb-dark-mat-indigo: (
+  50: #f8fafc,
+  100: #f1f5f9,
+  200: #e2e8f0,
+  300: #cbd5e1,
+  400: #94a3b8,
+  500: $tb-dark-primary-color,
+  600: $tb-secondary-color,
+  700: #483C8E,
+  800: $tb-primary-color,
+  900: #5b21b6,
+  A100: $tb-hue3-color,
+  A200: #a855f7,
+  A400: #9333ea,
+  A700: #7e22ce,
+  contrast: (
+    50: rgba(black, 0.87),
+    100: rgba(black, 0.87),
+    200: rgba(black, 0.87),
+    300: rgba(black, 0.87),
+    400: rgba(black, 0.87),
+    500: map_get($tb-mat-indigo, 50),
+    600: white,
+    700: white,
+    800: white,
+    900: white,
+    A100: rgba(black, 0.87),
+    A200: white,
+    A400: white,
+    A700: white,
+  )
+);
+
+$tb-dark-primary: mat.m2-define-palette($tb-dark-mat-indigo);
+
+$tb-dark-theme-background: (
+  status-bar: #1e1b4b,
+  app-bar:    #483C8E,
+  background: #3730a3,
+  hover:      rgba(white, 0.04),
+  card:       #3730a3,
+  dialog:     #3730a3,
+  disabled-button: rgba(white, 0.12),
+  raised-button: map-get($tb-dark-mat-indigo, 50),
+  focused-button: rgba(white, 0.12),
+  selected-button: #483C8E,
+  selected-disabled-button: #3730a3,
+  disabled-button-toggle: #1e1b4b,
+  unselected-chip: #483C8E,
+  disabled-list-option: #1e1b4b,
+  tooltip: map_get(mat.$m2-grey-palette, 700),
+);
+
+$tb-dark-theme: mat.m2-define-dark-theme((
+  color: (
+    primary: $tb-dark-primary,
+    accent: $tb-accent
+  ),
+  typography: mat.m2-define-typography-config(
+    $font-family: 'Mulish, "Helvetica Neue", sans-serif'
+  ),
+  density: 0
+));
+
+$color: map_get($tb-dark-theme, color);
+$color: map_merge($color, (background: $tb-dark-theme-background));
+$tb-dark-theme: map_merge($tb-dark-theme, (color: $color));
+$tb-dark-theme: map_merge($tb-dark-theme, $color);
+
+@mixin mat-fab-toolbar-theme($theme) {
+  $primary: map-get($theme, primary);
+  $accent: map-get($theme, accent);
+  $warn: map-get($theme, warn);
+  $background: map-get($theme, background);
+  $foreground: map-get($theme, foreground);
+
+  mat-fab-toolbar {
+    .mat-fab-toolbar-background {
+      background: mat.m2-get-color-from-palette($background, app-bar);
+      color: mat.m2-get-color-from-palette($foreground, text);
+    }
+    &.mat-primary {
+      .mat-fab-toolbar-background {
+        background: mat.m2-get-color-from-palette($primary);
+        color: mat.m2-get-color-from-palette($primary, default-contrast);
+      }
+    }
+    &.mat-accent {
+      .mat-fab-toolbar-background {
+        background: mat.m2-get-color-from-palette($accent);
+        color: mat.m2-get-color-from-palette($accent, default-contrast);
+      }
+    }
+    &.mat-warn {
+      .mat-fab-toolbar-background {
+        background: mat.m2-get-color-from-palette($warn);
+        color: mat.m2-get-color-from-palette($warn, default-contrast);
+      }
+    }
+  }
+}
+
+@mixin _mat-toolbar-inverse-color($palette) {
+  background: mat.m2-get-color-from-palette($palette, default-contrast);
+  color: rgba(black, 0.87);
+}
+
+@mixin mat-fab-toolbar-inverse-theme($theme) {
+  $primary: map-get($theme, primary);
+  $accent: map-get($theme, accent);
+  $warn: map-get($theme, warn);
+  $background: map-get($theme, foreground);
+  $foreground: map-get($theme, background);
+
+  mat-fab-toolbar {
+    .mat-fab-toolbar-background {
+      background: mat.m2-get-color-from-palette($background, app-bar);
+      color: mat.m2-get-color-from-palette($foreground, text);
+    }
+    &.mat-primary {
+      .mat-fab-toolbar-background {
+        @include _mat-toolbar-inverse-color($primary);
+      }
+    }
+    mat-toolbar {
+      &.mat-primary {
+        @include _mat-toolbar-inverse-color($primary);
+        button.mat-mdc-icon-button {
+          .mat-icon {
+            color: mat.m2-get-color-from-palette($primary);
+          }
+        }
+      }
+    }
+    .mat-mdc-fab {
+      &.mat-primary {
+        background: mat.m2-get-color-from-palette($primary, default-contrast);
+        color: mat.m2-get-color-from-palette($primary);
+      }
+    }
+  }
+
+}
+
+@mixin tb-components-theme($theme) {
+  $primary: map-get($theme, primary);
+  $warn: map-get($theme, warn);
+
+  mat-toolbar{
+    &.mat-hue-3 {
+      background-color: mat.m2-get-color-from-palette($primary, 'A100');
+    }
+  }
+
+  @include mat-fab-toolbar-theme($tb-theme);
+
+  div.tb-dashboard-page.mobile-app {
+    @include mat-fab-toolbar-inverse-theme($tb-theme);
+  }
+
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: rgba(72, 60, 142, 0.3);
+    &:hover {
+      background: rgba(72, 60, 142, 0.5);
+    }
+  }
+}
+
+.tb-default {
+  @include mat.all-component-themes($tb-theme);
+  @include mat-datetimepicker-theme($tb-theme);
+  @include tb-components-theme($tb-theme);
+  @include overwrites.theme-overwrites($tb-primary, $tb-theme);
+  @include mat.typography-hierarchy($tb-theme);
+}
+
+.tb-dark {
+  @include mat.all-component-colors($tb-dark-theme);
+}
